@@ -1,0 +1,15 @@
+C:\Users\tlanh\source\repos\Lab3_bai1\Lab3_bai10\bin\Debug\net10.0\Lab3_bai10.exe
+C:\Users\tlanh\source\repos\Lab3_bai1\Lab3_bai10\bin\Debug\net10.0\Lab3_bai10.deps.json
+C:\Users\tlanh\source\repos\Lab3_bai1\Lab3_bai10\bin\Debug\net10.0\Lab3_bai10.runtimeconfig.json
+C:\Users\tlanh\source\repos\Lab3_bai1\Lab3_bai10\bin\Debug\net10.0\Lab3_bai10.dll
+C:\Users\tlanh\source\repos\Lab3_bai1\Lab3_bai10\bin\Debug\net10.0\Lab3_bai10.pdb
+C:\Users\tlanh\source\repos\Lab3_bai1\Lab3_bai10\obj\Debug\net10.0\Lab3_bai10.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\tlanh\source\repos\Lab3_bai1\Lab3_bai10\obj\Debug\net10.0\Lab3_bai10.AssemblyInfoInputs.cache
+C:\Users\tlanh\source\repos\Lab3_bai1\Lab3_bai10\obj\Debug\net10.0\Lab3_bai10.AssemblyInfo.cs
+C:\Users\tlanh\source\repos\Lab3_bai1\Lab3_bai10\obj\Debug\net10.0\Lab3_bai10.csproj.CoreCompileInputs.cache
+C:\Users\tlanh\source\repos\Lab3_bai1\Lab3_bai10\obj\Debug\net10.0\Lab3_bai10.dll
+C:\Users\tlanh\source\repos\Lab3_bai1\Lab3_bai10\obj\Debug\net10.0\refint\Lab3_bai10.dll
+C:\Users\tlanh\source\repos\Lab3_bai1\Lab3_bai10\obj\Debug\net10.0\Lab3_bai10.pdb
+C:\Users\tlanh\source\repos\Lab3_bai1\Lab3_bai10\obj\Debug\net10.0\Lab3_bai10.genruntimeconfig.cache
+C:\Users\tlanh\source\repos\Lab3_bai1\Lab3_bai10\obj\Debug\net10.0\ref\Lab3_bai10.dll
+C:\Users\tlanh\source\repos\Lab3_bai1\Lab3_bai10\obj\Debug\net10.0\Lab3_bai10.csproj.Up2Date
