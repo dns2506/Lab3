@@ -1,51 +1,57 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Lab3_bai6
+namespace Lab3_bai9
 {
-    // Lớp trừu tượng NhanVien chứa thuộc tính chung và phương thức trừu tượng TinhLuong()
-    public abstract class NhanVien
+    // Khai báo Interface IPayment định nghĩa hợp đồng thanh toán
+    public interface IPayment
     {
-        public string HoTen { get; set; }
-        public abstract decimal TinhLuong();
+        bool ThanhToan(decimal soTien);
+        string LayTenPhuongThuc();
     }
 
-    // Lớp NhanVienVanPhong kế thừa NhanVien
-    public class NhanVienVanPhong : NhanVien
+    // Lớp ThanhToanTienMat thực thi IPayment
+    public class ThanhToanTienMat : IPayment
     {
-        public decimal LuongCoBan { get; set; }
-        public int SoNgayLamViec { get; set; }
-
-        public override decimal TinhLuong()
+        public bool ThanhToan(decimal soTien)
         {
-            // Công thức: Lương cơ bản nhân với tỷ lệ ngày làm việc trên chuẩn 22 ngày
-            return LuongCoBan * (SoNgayLamViec / 22m);
+            Console.WriteLine($"-> Đã thu thành công {soTien:N0} VNĐ bằng Tiền mặt trực tiếp.");
+            return true;
+        }
+
+        public string LayTenPhuongThuc()
+        {
+            return "Tiền mặt";
         }
     }
 
-    // Lớp NhanVienKinhDoanh kế thừa NhanVien
-    public class NhanVienKinhDoanh : NhanVien
+    // Lớp ChuyenKhoan thực thi IPayment
+    public class ChuyenKhoan : IPayment
     {
-        public decimal LuongCung { get; set; }
-        public decimal DoanhSo { get; set; }
-
-        public override decimal TinhLuong()
+        public bool ThanhToan(decimal soTien)
         {
-            // Công thức: Lương cứng cộng với 10% hoa hồng doanh số
-            return LuongCung + (DoanhSo * 0.1m);
+            Console.WriteLine($"-> Đã nhận thành công {soTien:N0} VNĐ qua Chuyển khoản ngân hàng (QR/IB).");
+            return true;
+        }
+
+        public string LayTenPhuongThuc()
+        {
+            return "Chuyển khoản Ngân hàng";
         }
     }
 
-    // Lớp GiangVien kế thừa NhanVien
-    public class GiangVien : NhanVien
+    // Lớp ViDienTu thực thi IPayment
+    public class ViDienTu : IPayment
     {
-        public int SoTietDay { get; set; }
-        public decimal DonGiaTiet { get; set; }
-
-        public override decimal TinhLuong()
+        public bool ThanhToan(decimal soTien)
         {
-            // Công thức: Số tiết dạy nhân với đơn giá một tiết
-            return SoTietDay * DonGiaTiet;
+            Console.WriteLine($"-> Đã thanh toán thành công {soTien:N0} VNĐ qua Ví điện tử (MoMo / ZaloPay / VNPay).");
+            return true;
+        }
+
+        public string LayTenPhuongThuc()
+        {
+            return "Ví điện tử";
         }
     }
 
@@ -56,24 +62,24 @@ namespace Lab3_bai6
             // Thiết lập tiếng Việt cho Console
             Console.OutputEncoding = System.Text.Encoding.UTF8;
 
-            Console.WriteLine("=== DEMO BÀI 6: HỆ THỐNG NHÂN VIÊN (TÍNH LƯƠNG ĐA HÌNH) ===");
+            Console.WriteLine("=== DEMO BÀI 9: HỆ THỐNG THANH TOÁN (INTERFACE) ===");
 
-            // Sử dụng danh sách đa hình chứa các loại nhân viên khác nhau
-            List<NhanVien> dsNhanVien = new List<NhanVien>
+            // Sử dụng danh sách đa hình chứa các phương thức thanh toán khác nhau thông qua interface IPayment
+            List<IPayment> dsThanhToan = new List<IPayment>
             {
-                new NhanVienVanPhong { HoTen = "Nguyễn Văn Hùng", LuongCoBan = 10000000m, SoNgayLamViec = 22 },
-                new NhanVienKinhDoanh { HoTen = "Trần Thị Mai", LuongCung = 6000000m, DoanhSo = 50000000m },
-                new GiangVien { HoTen = "Đỗ Ngọc Sơn", SoTietDay = 45, DonGiaTiet = 120000m }
+                new ThanhToanTienMat(),
+                new ChuyenKhoan(),
+                new ViDienTu()
             };
 
-            foreach (var nv in dsNhanVien)
-            {
-                string chucVu = "";
-                if (nv is NhanVienVanPhong) chucVu = "Nhân viên Văn phòng";
-                else if (nv is NhanVienKinhDoanh) chucVu = "Nhân viên Kinh doanh";
-                else if (nv is GiangVien) chucVu = "Giảng viên";
+            decimal soTienGiaoDich = 750000m; // Số tiền giả định cho đơn hàng
+            Console.WriteLine($"Thực hiện giao dịch cho đơn hàng trị giá: {soTienGiaoDich:N0} VNĐ\n");
 
-                Console.WriteLine($"- [{chucVu}] Họ tên: {nv.HoTen} | Lương thực nhận: {nv.TinhLuong():N0} VNĐ");
+            foreach (var payment in dsThanhToan)
+            {
+                Console.WriteLine($"Phương thức chọn: {payment.LayTenPhuongThuc()}");
+                payment.ThanhToan(soTienGiaoDich);
+                Console.WriteLine("--------------------------------------------------");
             }
 
             Console.ReadKey();
