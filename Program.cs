@@ -1,33 +1,51 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Lab3_bai3
+namespace Lab3_bai6
 {
-    // Lớp trừu tượng NguoiHoc chứa phương thức trừu tượng TinhHocPhi()
-    public abstract class NguoiHoc
+    // Lớp trừu tượng NhanVien chứa thuộc tính chung và phương thức trừu tượng TinhLuong()
+    public abstract class NhanVien
     {
         public string HoTen { get; set; }
-        public int SoTinChi { get; set; }
-
-        // Phương thức trừu tượng buộc các lớp con phải override lại cách tính học phí riêng
-        public abstract decimal TinhHocPhi();
+        public abstract decimal TinhLuong();
     }
 
-    // Lớp SinhVienChinhQuy kế thừa NguoiHoc
-    public class SinhVienChinhQuy : NguoiHoc
+    // Lớp NhanVienVanPhong kế thừa NhanVien
+    public class NhanVienVanPhong : NhanVien
     {
-        public override decimal TinhHocPhi()
+        public decimal LuongCoBan { get; set; }
+        public int SoNgayLamViec { get; set; }
+
+        public override decimal TinhLuong()
         {
-            return SoTinChi * 450000m;
+            // Công thức: Lương cơ bản nhân với tỷ lệ ngày làm việc trên chuẩn 22 ngày
+            return LuongCoBan * (SoNgayLamViec / 22m);
         }
     }
 
-    // Lớp SinhVienLienThong kế thừa NguoiHoc
-    public class SinhVienLienThong : NguoiHoc
+    // Lớp NhanVienKinhDoanh kế thừa NhanVien
+    public class NhanVienKinhDoanh : NhanVien
     {
-        public override decimal TinhHocPhi()
+        public decimal LuongCung { get; set; }
+        public decimal DoanhSo { get; set; }
+
+        public override decimal TinhLuong()
         {
-            return SoTinChi * 520000m;
+            // Công thức: Lương cứng cộng với 10% hoa hồng doanh số
+            return LuongCung + (DoanhSo * 0.1m);
+        }
+    }
+
+    // Lớp GiangVien kế thừa NhanVien
+    public class GiangVien : NhanVien
+    {
+        public int SoTietDay { get; set; }
+        public decimal DonGiaTiet { get; set; }
+
+        public override decimal TinhLuong()
+        {
+            // Công thức: Số tiết dạy nhân với đơn giá một tiết
+            return SoTietDay * DonGiaTiet;
         }
     }
 
@@ -38,26 +56,25 @@ namespace Lab3_bai3
             // Thiết lập tiếng Việt cho Console
             Console.OutputEncoding = System.Text.Encoding.UTF8;
 
-            Console.WriteLine("=== DEMO BÀI 3: LỚP TRỪU TƯỢNG HỌC PHÍ ===");
+            Console.WriteLine("=== DEMO BÀI 6: HỆ THỐNG NHÂN VIÊN (TÍNH LƯƠNG ĐA HÌNH) ===");
 
-            // Khởi tạo danh sách các đối tượng người học (tính đa hình qua lớp cha NguoiHoc)
-            List<NguoiHoc> danhSachNguoiHoc = new List<NguoiHoc>
+            // Sử dụng danh sách đa hình chứa các loại nhân viên khác nhau
+            List<NhanVien> dsNhanVien = new List<NhanVien>
             {
-                new SinhVienChinhQuy { HoTen = "Đỗ Ngọc Sơn", SoTinChi = 18 },
-                new SinhVienLienThong { HoTen = "Văn Bình", SoTinChi = 15 }
+                new NhanVienVanPhong { HoTen = "Nguyễn Văn Hùng", LuongCoBan = 10000000m, SoNgayLamViec = 22 },
+                new NhanVienKinhDoanh { HoTen = "Trần Thị Mai", LuongCung = 6000000m, DoanhSo = 50000000m },
+                new GiangVien { HoTen = "Đỗ Ngọc Sơn", SoTietDay = 45, DonGiaTiet = 120000m }
             };
 
-            decimal tongTien = 0;
-            foreach (var item in danhSachNguoiHoc)
+            foreach (var nv in dsNhanVien)
             {
-                decimal hocPhi = item.TinhHocPhi();
-                tongTien += hocPhi;
-                string loaiSV = item is SinhVienChinhQuy ? "Chính quy" : "Liên thông";
+                string chucVu = "";
+                if (nv is NhanVienVanPhong) chucVu = "Nhân viên Văn phòng";
+                else if (nv is NhanVienKinhDoanh) chucVu = "Nhân viên Kinh doanh";
+                else if (nv is GiangVien) chucVu = "Giảng viên";
 
-                Console.WriteLine($"- Sinh viên: {item.HoTen} ({loaiSV}) | Số tín: {item.SoTinChi} | Học phí: {hocPhi:N0} VNĐ");
+                Console.WriteLine($"- [{chucVu}] Họ tên: {nv.HoTen} | Lương thực nhận: {nv.TinhLuong():N0} VNĐ");
             }
-
-            Console.WriteLine($"=> Tổng học phí cần thu: {tongTien:N0} VNĐ");
 
             Console.ReadKey();
         }
